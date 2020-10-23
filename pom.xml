@@ -9,24 +9,53 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<artifactId>experience-api</artifactId>
+	<artifactId>account-summary-experience-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>experience-api</name>
-	<description>Demo project for Spring Boot</description>
+	<name>account-summary-experience-api</name>
+	<description>account-summary-experience-api</description>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<account-summary-core.version>0.0.1-SNAPSHOT</account-summary-core.version>
+		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>com.experience.api</groupId>
 			<artifactId>account-summary-core</artifactId>
 			<version>${account-summary-core.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix-dashboard</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>
