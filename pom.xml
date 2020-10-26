@@ -22,13 +22,13 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>com.experience.api</groupId>
 			<artifactId>account-summary-core</artifactId>
 			<version>${account-summary-core.version}</version>
 		</dependency>
 
+		<!-- Netflix Hystrix Depedencies -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
