@@ -1,36 +1,31 @@
 package com.experience.api;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
-import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.experience.api.aspect.CircuitBreakerCommand;
+
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/experience/api")
 public class ExampleRestController {
 
-	@SuppressWarnings("rawtypes")
-	@Autowired
-	private CircuitBreakerFactory circuitBreakerFactory;
-
 	@GetMapping("/account/summary")
-	public String getAccountSummary() {
+	@CircuitBreakerCommand(fallbackMethod = "getAccountSummaryFallback")
+	public Mono<String> getAccountSummary() {
 
-		CircuitBreaker circuitBreaker = circuitBreakerFactory.create("circuitbreaker");
+		if (!RandomUtils.nextBoolean()) {
+			return Mono.error(new RuntimeException("Error while calling Service"));
+		}
 
-		return circuitBreaker.run(() -> {
-			if (RandomUtils.nextBoolean()) {
-				throw new RuntimeException("Exception in Account Summary");
-			}
-			return "AccountSummry";
-		}, throwable -> getAccountSummaryFallback());
-
+		return Mono.just("Into Actual Call");
 	}
 
-	public String getAccountSummaryFallback() {
-		return "Into Account Summary Fallback !!!";
+	public Mono<String> getAccountSummaryFallback() {
+		System.out.println("Thread Name : " + Thread.currentThread().getName());
+		return Mono.just("Into Fallback Call......");
 	}
 }
