@@ -22,11 +22,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.experience.api</groupId>
-			<artifactId>account-summary-core</artifactId>
-			<version>${account-summary-core.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
