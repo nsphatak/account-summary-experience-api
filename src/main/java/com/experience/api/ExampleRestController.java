@@ -16,18 +16,17 @@ public class ExampleRestController {
 
 	@GetMapping("/account/summary/{id}")
 	@CircuitBreakerCommand(fallbackMethod = "getAccountSummaryFallback")
-	public Mono<Account> getAccountSummary(@PathVariable int id) {
-
-		if (!RandomUtils.nextBoolean()) {
-			return Mono.error(new RuntimeException("Error while calling Service"));
-		}
-
+	public Mono<String> getAccountSummary(@PathVariable int id) {
+		
 		System.out.println("INTO ACTUAL CALL ....");
-  		return Mono.empty();
+		if(true) {
+			throw new RuntimeException();
+		}
+   		return Mono.just("from Service call....");
 	}
 
-	public Mono<Account> getAccountSummaryFallback() {
-		System.out.println("Into Fallback : " + Thread.currentThread().getName());
-		return Mono.empty();
+	public Mono<String> getAccountSummaryFallback() {
+		System.out.println("Into Fallback : ");
+		return Mono.just("Into FallBack");
 	}
 }
